@@ -1,4 +1,4 @@
-// Page de l'analyseur Patch : lecture du fichier, préparation de l'audio,
+// Analyseur Patchmix : lecture du fichier, préparation de l'audio,
 // envoi au worker, affichage du résultat.
 
 const SAMPLE_RATE = 44100;
@@ -86,7 +86,7 @@ function analyse(samples) {
     w.onmessage = (event) => {
       const msg = event.data;
       if (msg.type === 'progress') {
-        $('busy-step').textContent = msg.step === 'key' ? 'Recherche de la tonalité…' : 'Calcul du tempo…';
+        $('busy-step').textContent = msg.step === 'key' ? 'Recherche de la key…' : 'Calcul du BPM…';
       } else if (msg.type === 'result') {
         resolve(msg);
       } else if (msg.type === 'error') {
@@ -119,12 +119,12 @@ async function handleFile(file) {
     $('key').textContent = key.name;
     $('key-note').textContent = `${reliability(result.strength)}. Peut aussi sonner en ${key.relative}, sa relative.`;
     $('bpm').textContent = tempo.value;
-    $('bpm-note').textContent = tempo.alt || 'Tempo estimé sur le cœur du morceau.';
+    $('bpm-note').textContent = tempo.alt || 'BPM estimé sur le cœur du morceau.';
     $('camelot').textContent = key.camelot;
     $('duration').textContent = formatDuration(audio.duration);
     $('format').textContent = `${Math.round(audio.sampleRate / 100) / 10} kHz · ${audio.channels === 1 ? 'mono' : 'stéréo'}`;
     $('elapsed').textContent = `Analysé en ${((performance.now() - started) / 1000).toFixed(1).replace('.', ',')} s, sur ton appareil.`;
-    lastSummary = `${key.name} · ${tempo.value}`;
+    lastSummary = `${key.name} · ${key.camelot} · ${tempo.value}`;
     show('done');
   } catch (error) {
     console.error(error);

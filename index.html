@@ -3,8 +3,19 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Analyseur de prod gratuit : tonalité et BPM · Patch</title>
-<meta name="description" content="Trouve la tonalité et le tempo de ta prod en quelques secondes. Gratuit, sans compte, ton fichier reste sur ton appareil.">
+<title>Analyseur de prods gratuit : BPM et key · Patchmix</title>
+<meta name="description" content="Trouve le BPM et la key de ta prod en quelques secondes. Gratuit, sans compte, ton fichier reste sur ton appareil.">
+<link rel="icon" type="image/png" href="icon.png">
+<link rel="apple-touch-icon" href="icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Patchmix">
+<meta property="og:title" content="Analyseur de prods gratuit · Patchmix">
+<meta property="og:description" content="Le BPM et la key de ta prod, gratuit. Sans compte, ton fichier reste sur ton appareil.">
+<meta property="og:image" content="https://patch-analyseur.vercel.app/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://patch-analyseur.vercel.app/og.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap">
@@ -19,23 +30,31 @@ body { margin: 0; min-height: 100vh; background: var(--bg); color: var(--text); 
 a { color: var(--accent); }
 .wrap { max-width: 1080px; margin: 0 auto; padding: 24px 20px 48px; display: flex; flex-direction: column; gap: 32px; }
 header { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
-.brand { display: flex; align-items: center; gap: 12px; font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 22px; letter-spacing: -0.03em; color: var(--text); text-decoration: none; }
+.brand { display: flex; align-items: center; gap: 10px; color: var(--text); text-decoration: none; }
+.brand-txt { display: flex; flex-direction: column; gap: 2px; }
+.brand-nom { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 22px; letter-spacing: -0.04em; line-height: 1; }
+.brand-nom b { color: var(--accent); font-weight: 700; }
+.brand-sous { font-size: 11px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); line-height: 1; }
+.brand:hover .brand-nom { opacity: .85; }
 .tag { padding: 8px 14px; border-radius: 999px; border: 1px solid var(--line-strong); color: var(--muted); font-size: 14px; }
 h1 { margin: 0; font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: clamp(2rem, 6vw, 3.2rem); line-height: 1.05; letter-spacing: -0.03em; }
 .lead { margin: 10px 0 0; font-size: 1.1rem; color: var(--muted); }
-.zone { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; min-height: 320px; padding: 32px 20px; border: 2px dashed var(--line-strong); border-radius: 20px; background: var(--card); text-align: center; transition: border-color .15s, background .15s; }
+.zone { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; min-height: 320px; padding: 32px 20px; border: 2px dashed var(--line-strong); border-radius: 20px; background: var(--card); text-align: center; transition: border-color .15s, background .15s; cursor: pointer; }
 .zone.over { border-color: var(--accent); background: #1F2117; }
 .zone h2 { margin: 0; font-family: 'Space Grotesk', sans-serif; font-weight: 500; font-size: 1.4rem; }
 .hint { color: var(--muted); font-size: 15px; margin: 0; }
-.btn { display: inline-flex; align-items: center; justify-content: center; min-height: 52px; padding: 0 26px; border-radius: 12px; border: none; background: var(--accent); color: var(--bg); font: 600 16px 'IBM Plex Sans', sans-serif; cursor: pointer; text-decoration: none; }
+.btn { display: inline-flex; align-items: center; justify-content: center; min-height: 52px; padding: 0 26px; border-radius: 12px; border: none; background: var(--accent); color: var(--bg); font: 600 16px 'IBM Plex Sans', sans-serif; cursor: pointer; text-decoration: none; transition: transform 90ms ease, filter 150ms ease, border-color 150ms ease; -webkit-tap-highlight-color: transparent; }
+.btn:hover { filter: brightness(1.08); }
+.btn:active { transform: scale(0.97); filter: brightness(0.9); }
 .btn.ghost { background: transparent; color: var(--text); border: 1px solid var(--line-strong); font-weight: 500; }
-.btn:focus-visible, .zone:focus-within { outline: 3px solid var(--accent); outline-offset: 3px; }
+.btn.ghost:hover { filter: none; border-color: var(--text); }
+.btn:focus-visible, .zone:focus-within, .brand:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 .busy { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px; min-height: 320px; border-radius: 20px; background: var(--card); text-align: center; padding: 32px 20px; }
 .pulse { display: flex; align-items: center; gap: 5px; height: 64px; }
 .pulse span { width: 6px; border-radius: 3px; background: var(--accent); animation: p 1s ease-in-out infinite; }
 @keyframes p { 0%, 100% { height: 14px; } 50% { height: 60px; } }
-@media (prefers-reduced-motion: reduce) { .pulse span { animation: none; height: 32px; } }
+@media (prefers-reduced-motion: reduce) { .pulse span { animation: none; height: 32px; } .btn:active { transform: none; } }
 .mono { font-family: 'IBM Plex Mono', monospace; }
 .results { display: flex; flex-direction: column; gap: 16px; }
 .row { display: flex; flex-wrap: wrap; gap: 16px; }
@@ -58,15 +77,18 @@ footer a { color: var(--muted); }
 <body>
 <div class="wrap">
   <header>
-    <a class="brand" href="./" aria-label="Patch, accueil">
+    <a class="brand" href="https://patchmix.fr" aria-label="Patchmix, retour sur patchmix.fr">
       <svg width="40" height="40" viewBox="0 0 64 64" fill="none" aria-hidden="true"><g transform="translate(-3 0)"><rect x="14" y="6" width="9" height="52" rx="1.5" fill="#F2F0EA"/><path d="M18.5 10.5 H33 A12.5 12.5 0 0 1 33 35.5 H18.5" stroke="#F2F0EA" stroke-width="9"/><rect x="30" y="47" width="3.5" height="6" rx="1.75" fill="#C8F03C"/><rect x="35.5" y="43.5" width="3.5" height="13" rx="1.75" fill="#C8F03C"/><rect x="41" y="40.5" width="3.5" height="19" rx="1.75" fill="#C8F03C"/><rect x="46.5" y="44.5" width="3.5" height="11" rx="1.75" fill="#C8F03C"/><rect x="52" y="47.5" width="3.5" height="5" rx="1.75" fill="#C8F03C"/></g></svg>
-      <span>patch</span>
+      <span class="brand-txt">
+        <span class="brand-nom">patch<b>mix</b></span>
+        <span class="brand-sous">Analyseur</span>
+      </span>
     </a>
     <span class="tag">Gratuit, sans compte</span>
   </header>
 
   <div>
-    <h1>Trouve la tonalité et le tempo de ta prod</h1>
+    <h1>Trouve le BPM et la key de ta prod</h1>
     <p class="lead">Dépose ton fichier audio, le résultat s'affiche en quelques secondes.</p>
   </div>
 
@@ -92,12 +114,12 @@ footer a { color: var(--muted); }
       <div class="mono" id="done-name" style="font-size:15px"></div>
       <div class="row">
         <div class="big">
-          <div class="label">Tonalité</div>
+          <div class="label">Key</div>
           <div class="value accent" id="key"></div>
           <div class="note" id="key-note"></div>
         </div>
         <div class="big">
-          <div class="label">Tempo</div>
+          <div class="label">BPM</div>
           <div class="value" id="bpm"></div>
           <div class="note" id="bpm-note"></div>
         </div>
@@ -113,8 +135,8 @@ footer a { color: var(--muted); }
         <span class="note" id="elapsed"></span>
       </div>
       <div class="cta">
-        <div><strong>Un outil gratuit signé Patch</strong><span class="note">Patch arrive bientôt : la plateforme qui connecte artistes et ingés son. Inscris-toi pour être prévenu du lancement.</span></div>
-        <a class="btn ghost" href="https://forms.gle/LjYfLjpcN46d5yfk7">Rejoindre la liste d'attente</a>
+        <div><strong>Un outil gratuit signé Patchmix</strong><span class="note">Patchmix, la plateforme qui connecte artistes et ingés son : retours à la seconde sur le morceau, versions comparées, son final débloqué au paiement. Version bêta en cours.</span></div>
+        <a class="btn ghost" href="https://patchmix.fr">Découvrir Patchmix</a>
       </div>
     </section>
 
@@ -126,7 +148,7 @@ footer a { color: var(--muted); }
   </main>
 
   <footer>
-    <span>Patch · Rappeurs ⇄ ingés son</span>
+    <span><a href="https://patchmix.fr">Patchmix</a> · Artistes ⇄ ingés son</span>
     <span><a href="mentions-legales.html">Mentions légales</a> · Analyse réalisée avec <a href="https://github.com/MTG/essentia.js">Essentia.js</a> (licence AGPL) · <a href="https://github.com/contactpatchmix/patch-analyseur">Code source</a></span>
   </footer>
 </div>

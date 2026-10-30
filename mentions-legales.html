@@ -3,11 +3,22 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Mentions légales · Patch</title>
+<title>Mentions légales · Analyseur Patchmix</title>
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/png" href="icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600&family=Space+Grotesk:wght@700&display=swap">
 <style>
 body { margin: 0; background: #101012; color: #F2F0EA; font: 16px/1.6 'IBM Plex Sans', 'Helvetica Neue', sans-serif; }
 .wrap { max-width: 720px; margin: 0 auto; padding: 32px 20px 64px; }
 a { color: #C8F03C; }
+.haut { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 8px; }
+.brand { display: flex; align-items: center; gap: 10px; color: #F2F0EA; text-decoration: none; }
+.brand-txt { display: flex; flex-direction: column; gap: 2px; }
+.brand-nom { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 20px; letter-spacing: -0.04em; line-height: 1; }
+.brand-nom b { color: #C8F03C; }
+.brand-sous { font-size: 10px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: #B5B3AD; line-height: 1; }
 h1 { font-family: 'Space Grotesk', sans-serif; letter-spacing: -0.02em; }
 h2 { font-size: 1.1rem; margin-top: 32px; }
 p, li { color: #D9D7D1; }
@@ -15,21 +26,31 @@ p, li { color: #D9D7D1; }
 </head>
 <body>
 <div class="wrap">
-  <p><a href="./">← Retour à l'analyseur</a></p>
+  <div class="haut">
+    <a class="brand" href="https://patchmix.fr" aria-label="Patchmix, retour sur patchmix.fr">
+      <svg width="34" height="34" viewBox="0 0 64 64" fill="none" aria-hidden="true"><g transform="translate(-3 0)"><rect x="14" y="6" width="9" height="52" rx="1.5" fill="#F2F0EA"/><path d="M18.5 10.5 H33 A12.5 12.5 0 0 1 33 35.5 H18.5" stroke="#F2F0EA" stroke-width="9"/><rect x="30" y="47" width="3.5" height="6" rx="1.75" fill="#C8F03C"/><rect x="35.5" y="43.5" width="3.5" height="13" rx="1.75" fill="#C8F03C"/><rect x="41" y="40.5" width="3.5" height="19" rx="1.75" fill="#C8F03C"/><rect x="46.5" y="44.5" width="3.5" height="11" rx="1.75" fill="#C8F03C"/><rect x="52" y="47.5" width="3.5" height="5" rx="1.75" fill="#C8F03C"/></g></svg>
+      <span class="brand-txt">
+        <span class="brand-nom">patch<b>mix</b></span>
+        <span class="brand-sous">Analyseur</span>
+      </span>
+    </a>
+    <a href="./">← Retour à l'analyseur</a>
+  </div>
+
   <h1>Mentions légales</h1>
 
   <h2>Éditeur du site</h2>
-  <p>Sam DARVEY<br>
+  <p>L'analyseur de Patchmix est édité par Sam Darvey, particulier.<br>
+  Adresse : 609 Les Belles Portes 6, 14200 Hérouville-Saint-Clair.<br>
   E-mail : contact.patchmix@gmail.com<br>
-  Directeur de la publication : Sam DARVEY</p>
+  Directeur de la publication : Sam Darvey</p>
 
   <h2>Hébergement</h2>
-  <p>Vercel Inc., 440 N Barranca Ave #4133, Covina, CA 91723, États-Unis — <a href="https://vercel.com">vercel.com</a><br>
-  </p>
+  <p>Vercel Inc., 440 N Barranca Ave #4133, Covina, CA 91723, États-Unis (<a href="https://vercel.com">vercel.com</a>).</p>
 
   <h2>Données personnelles</h2>
-  <p>L'analyse des fichiers audio se fait entièrement dans ton navigateur. Aucun fichier n'est envoyé ni conservé sur nos serveurs. Ce site n'utilise pas de cookies publicitaires.</p>
-  <p>Si tu t'inscris à la liste d'attente, ton adresse e-mail sert uniquement à te prévenir du lancement de Patch. Tu peux demander sa suppression à tout moment à contact.patchmix@gmail.com.</p>
+  <p>L'analyse des fichiers audio se fait entièrement dans ton navigateur. Aucun fichier n'est envoyé ni conservé sur nos serveurs. Cette page n'utilise aucun cookie, ni publicitaire ni de mesure d'audience.</p>
+  <p>Si tu crées un compte ou t'inscris sur <a href="https://patchmix.fr">patchmix.fr</a>, tes données sont traitées selon la <a href="https://patchmix.fr/confidentialite">politique de confidentialité de Patchmix</a>. Tu peux demander leur suppression à tout moment à contact.patchmix@gmail.com.</p>
 
   <h2>Logiciels utilisés</h2>
   <p>L'analyse repose sur <a href="https://github.com/MTG/essentia.js">Essentia.js</a> (Music Technology Group, Universitat Pompeu Fabra), distribué sous licence AGPL-3.0. Le code source de cette page est disponible ici : <a href="https://github.com/contactpatchmix/patch-analyseur">https://github.com/contactpatchmix/patch-analyseur</a>.</p>
